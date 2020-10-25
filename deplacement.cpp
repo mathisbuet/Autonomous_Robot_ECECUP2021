@@ -104,7 +104,7 @@ void deplacementSimple(){
   stopMot();
 }
 
-void turnDroite(){
+void turnDroite(){ //90 degrés à droite 
 
   unsigned long tpsStop = millis()+800;
   while(tpsStop>millis()){
@@ -113,7 +113,7 @@ void turnDroite(){
   stopMot();
 }
 
-void turnGauche(){
+void turnGauche(){ //90 degrés à gauche
 
   unsigned long tpsStop = millis()+800;
   while(tpsStop>millis()){
