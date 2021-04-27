@@ -3,121 +3,183 @@
 #include <PubSubClient.h>
 
 
-void mouvement(char donnee){
+void mouvement(char donnee, char& typeDeplacement){
   switch(donnee){
     case 'z':
-      marcheAvant();
+      marcheAvant(typeDeplacement);
+
       break;
-    case 's':
-      marcheArriere();
+    case 'r':
+      marcheArriere(typeDeplacement);
+
       break;
     case 'q':
-      tourneGauche();
+      tourneGauche(typeDeplacement);
+
       break;
     case 'd':
-      tourneDroit();
-      break;
-    case ' ':
-      stopMot();
-      break;
-    case 'g':
-      deplacementSimple();
-      break;
+      tourneDroit(typeDeplacement);
       
+      break;
+
+    case 'm':
+       //prendreModule(commandeA,commandeB);
+       stopMot(typeDeplacement);
+       break;
+    case ' ':
+      stopMot(typeDeplacement);
+      break;
+
+    case 's':
+      stopMot(typeDeplacement);
+      break;
+
+
+      
+    
     case 'o':
-      turnGauche();
+      turnGauche(typeDeplacement);
       break;
     case 'p':
-      turnDroite();
+      turnDroite(typeDeplacement);
       break;
+       
     default : 
       break;
+     
   } 
 }
 
 
-void marcheArriere()
+
+void marcheArriere(char& typeDeplacement)
 {
-  analogWrite(PWMA, 1023);
-  analogWrite(PWMB, 1023);
+
   digitalWrite(DIRA, LOW);
   digitalWrite(DIRB, LOW);
-  
+  typeDeplacement='R';
 }
 
 
-void marcheAvant()
+void marcheAvant(char& typeDeplacement)
 {
-  analogWrite(PWMA, 1023);
-  analogWrite(PWMB, 1023);
+
   digitalWrite(DIRA, HIGH);
   digitalWrite(DIRB, HIGH);
-  
+  typeDeplacement='A';
 }
 
 
-void tourneGauche()
+void tourneGauche(char& typeDeplacement)
 {
-  analogWrite(PWMA, 1023);
-  analogWrite(PWMB, 0);
-  digitalWrite(DIRA, HIGH);
-  digitalWrite(DIRB, LOW);
-  
-}
 
-void tourneDroit()
-{
-  analogWrite(PWMA, 0);
-  analogWrite(PWMB, 1023);
+
+
   digitalWrite(DIRA, LOW);
   digitalWrite(DIRB, HIGH);
+
+ typeDeplacement='G';
   
+
   
 }
 
-void stopMot()
+void tourneDroit(char& typeDeplacement)
 {
-  analogWrite(PWMA, 0);
-  analogWrite(PWMB, 0);
+  
+
+    digitalWrite(DIRA, HIGH);
+    digitalWrite(DIRB, LOW);
+
+
+
+   typeDeplacement='D';
   
 }
 
-void deplacementSimple(){
-  unsigned long tpsStop=millis()+ 1000;
+
+
+void turnDroite(char& typedDeplacement){ //90 degrés à droite 
+
+  unsigned long tpsStop = millis()+800;
   while(tpsStop>millis()){
-    marcheAvant();
+    digitalWrite(DIRA, HIGH);
+    digitalWrite(DIRB, LOW);
+    analogWrite(PWMA, 1023);
+    analogWrite(PWMB, 1023);
   }
-  stopMot();
-  delay(1000);
-  
-  turnGauche();
-  
-  delay(1000);
+  typedDeplacement='S';
+}
 
-  turnDroite();
+void turnGauche(char& typedDeplacement){ //90 degrés à gauche
+
+
+
+  unsigned long tpsStop = millis()+800;
+  //ALLER A GAUCHE
+  while(tpsStop>millis()){
+        digitalWrite(DIRA, LOW);
+    digitalWrite(DIRB, HIGH);
+    analogWrite(PWMA, 1023);
+    analogWrite(PWMB, 1023);
+
+  }
+  typedDeplacement='S';
+}
+
+
+
+
+void stopMot(char& typeDeplacement)
+{
+  typeDeplacement='S';
   
-  delay(1000);
+}
+
+/*
+void prendreModule(float& commandeA, float& commandeB){
+  unsigned long tpsStop = millis()+1000;
+  //RECULER
+  while(tpsStop>millis()){
+        digitalWrite(DIRA, LOW);
+    digitalWrite(DIRB, LOW);
+    analogWrite(PWMA, 1023);
+    analogWrite(PWMB, 1023);
+
+  }
+
+  tpsStop = millis()+350;
+  //DROITE
+  while(tpsStop>millis()){
+        digitalWrite(DIRA, HIGH);
+    digitalWrite(DIRB, LOW);
+    analogWrite(PWMA, 1023);
+    analogWrite(PWMB, 1023);
+
+  }
+
+
   tpsStop = millis()+1000;
+  //AVANCER
   while(tpsStop>millis()){
-    marcheArriere();
+        digitalWrite(DIRA, HIGH);
+    digitalWrite(DIRB, HIGH);
+    analogWrite(PWMA, 1023);
+    analogWrite(PWMB, 1023);
+
   }
-  stopMot();
-}
 
-void turnDroite(){ //90 degrés à droite 
-
-  unsigned long tpsStop = millis()+800;
+  tpsStop = millis()+350;
+  //ALLER A GAUCHE
   while(tpsStop>millis()){
-    tourneDroit();
-  }
-  stopMot();
-}
+        digitalWrite(DIRA, LOW);
+    digitalWrite(DIRB, HIGH);
+    analogWrite(PWMA, 1023);
+    analogWrite(PWMB, 1023);
 
-void turnGauche(){ //90 degrés à gauche
-
-  unsigned long tpsStop = millis()+800;
-  while(tpsStop>millis()){
-    tourneGauche();
   }
-  stopMot();
+
+
+  
 }
+*/

@@ -8,8 +8,5 @@ void initialisationMoteurs()
   pinMode(DIRA, OUTPUT);
   pinMode(DIRB, OUTPUT);
 
-  analogWrite(PWMA, 0);
-  analogWrite(PWMB, 0);
-  digitalWrite(DIRA, LOW);
-  digitalWrite(DIRB, LOW);
+
 }
